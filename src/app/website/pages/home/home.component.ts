@@ -8,10 +8,9 @@ import { Product } from '../../../models/product.model';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
   products: Product[] = [];
   limit = 10;
   offset = 0;
@@ -20,17 +19,17 @@ export class HomeComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.productsService.getAll(10, 0).subscribe((data) => {
       this.products = data;
       this.offset += this.limit;
     });
-    this.route.queryParamMap.subscribe(params => {
+    this.route.queryParamMap.subscribe((params) => {
       this.productId = params.get('product');
-      console.log(this.productId);
-    })
+      // console.log(this.productId);
+    });
   }
 
   onLoadMore() {
@@ -39,5 +38,4 @@ export class HomeComponent implements OnInit {
       this.offset += this.limit;
     });
   }
-
 }
