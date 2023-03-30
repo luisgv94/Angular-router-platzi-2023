@@ -11,6 +11,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 import { AuthGuard } from './../guards/auth.guard';
+import { ExitGuard } from '../guards/exit.guard';
 
 const routes: Routes = [
   {
@@ -20,22 +21,25 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: '/home',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
       },
       {
         path: 'category',
-        loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule),
+        loadChildren: () =>
+          import('./pages/category/category.module').then(
+            (m) => m.CategoryModule
+          ),
         data: {
           preload: true,
-        }
+        },
       },
       {
         path: 'product/:id',
-        component: ProductDetailComponent
+        component: ProductDetailComponent,
       },
       {
         path: 'my-cart',
@@ -47,6 +51,7 @@ const routes: Routes = [
       },
       {
         path: 'register',
+        canDeactivate: [ExitGuard],
         component: RegisterComponent,
       },
       {
@@ -55,15 +60,15 @@ const routes: Routes = [
       },
       {
         path: 'profile',
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
         component: ProfileComponent,
       },
-    ]
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class WebsiteRoutingModule { }
+export class WebsiteRoutingModule {}
